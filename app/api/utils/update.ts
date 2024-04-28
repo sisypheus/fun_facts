@@ -1,7 +1,6 @@
 import { db } from "@/db";
 import { displayed_facts, facts } from "@/db/schema";
 import { sql } from "drizzle-orm";
-import { SQLiteTimestamp } from "drizzle-orm/sqlite-core";
 
 export function updateFod() {
 
