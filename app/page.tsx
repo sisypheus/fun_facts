@@ -1,28 +1,36 @@
 "use client"
 
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Skeleton } from "@nextui-org/react";
-import { Suspense, useEffect, useState } from "react";
+import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Skeleton, Button } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [fetched, setFetched] = useState(false);
+  const [random, setRandomFact] = useState('')
   const [fact, setFact] = useState('');
 
   const fetchQuote = async () => {
-    const res = await (await fetch("/api/facts")).json()
+    console.log('here')
+    const res = await (await fetch("/api/fod")).json()
 
-    setFact(res?.content)
+    setFact(res)
     setFetched(true);
   }
 
-  useEffect(() => {
-    if (fetched)
-      return;
+  const fetchRandomQuote = async () => {
+    const res = await (await fetch("/api/random")).json()
 
-    fetchQuote()
+    setRandomFact(res)
+  }
+
+  useEffect(() => {
+    if (!fetched)
+      fetchQuote()
   }, [fetched])
 
   return (
     <main className="flex flex-col items-center px-3">
+      <Button onClick={fetchRandomQuote}>random</Button>
+      {random}
       <Card className="max-w-xl">
         <CardHeader className="flex gap-3">
           <div className="flex flex-col">
