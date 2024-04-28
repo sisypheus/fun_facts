@@ -2,6 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
+import { SiteFooter } from "@/components/footer";
+import { cn } from "@/lib/utils";
+import { LucideLightbulb } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,11 +19,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="dark text-foreground bg-background">
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(
+        "min-h-screen bg-background font-sans antialiased flex flex-col",
+        inter.className
+      )}>
         <Providers>
-          <div className="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]">
-            {children}
+          <div className="inset-0 min-h-screen h-full w-full flex flex-col items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]">
+            <div className="flex flex-col flex-grow items-center justify-center p-2">
+              <LucideLightbulb className="w-16 h-16 bg-black rounded-lg p-2" />
+              {children}
+            </div>
+
+            <SiteFooter />
           </div>
         </Providers>
       </body>

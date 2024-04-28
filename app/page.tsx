@@ -1,15 +1,16 @@
 "use client"
 
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Skeleton, Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Shuffle } from "lucide-react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 export default function Home() {
   const [fetched, setFetched] = useState(false);
-  const [random, setRandomFact] = useState('')
   const [fact, setFact] = useState('');
 
   const fetchQuote = async () => {
-    console.log('here')
     const res = await (await fetch("/api/fod")).json()
 
     setFact(res)
@@ -19,7 +20,7 @@ export default function Home() {
   const fetchRandomQuote = async () => {
     const res = await (await fetch("/api/random")).json()
 
-    setRandomFact(res)
+    setFact(res)
   }
 
   useEffect(() => {
@@ -28,37 +29,30 @@ export default function Home() {
   }, [fetched])
 
   return (
-    <main className="flex flex-col items-center px-3">
-      <Button onClick={fetchRandomQuote}>random</Button>
-      {random}
-      <Card className="max-w-xl">
-        <CardHeader className="flex gap-3">
-          <div className="flex flex-col">
-            <p className="text-lg leading-tight font-semibold">Random fact of the day</p>
-          </div>
-        </CardHeader>
-        <Divider />
-        <CardBody>
-          <blockquote className="p-4 border-l-2 pl-6 italic">
-            {fetched ? (
-              fact
-            ) : (
-              <Skeleton className="h-4 rounded-lg w-full" isLoaded={fetched}>
-              </Skeleton>
-            )}
-          </blockquote>
-        </CardBody>
-        <Divider />
-        <CardFooter>
-          <Link
-            isExternal
-            showAnchorIcon
-            href="https://github.com/sisypheus/fun_facts"
-          >
-            Visit source code on GitHub.
-          </Link>
-        </CardFooter>
-      </Card>
+    <main className="flex items-center px-3 py-4 flex-grow">
+      <div className="flex flex-col items-center justify-center h-full">
+
+        <h1 className="text-2xl leading-tight font-bold p-4 text-transparent bg-clip-text inline-block bg-gradient-to-br from-blue-600 via-purple-400 to-red-600">Random fact of the day</h1>
+
+        <Card className="max-w-xl p-1">
+          <CardContent className="py-6">
+            <blockquote className=" border-l-2 pl-6 italic">
+              {fetched ? (
+                <p className="font-semibold text-lg">{fact}</p>
+              ) : (
+                <div className="space-y-3">
+                  <Skeleton className="h-4 rounded-lg w-[250px]" />
+                  <Skeleton className="h-4 rounded-lg w-[250px]" />
+                  <Skeleton className="h-4 rounded-lg w-[250px]" />
+                </div>
+              )}
+            </blockquote>
+          </CardContent>
+          <CardFooter className="flex flex-row-reverse">
+            <Button className="px-6 font-bold text-base" variant={"expandIcon"} Icon={Shuffle} iconPlacement={"right"} onClick={fetchRandomQuote}>Shuffle !</Button>
+          </CardFooter>
+        </Card>
+      </div>
     </main>
   );
 }
