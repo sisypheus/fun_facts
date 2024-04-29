@@ -1,8 +1,9 @@
 import { db } from "@/db";
 import { facts, displayed_facts } from "@/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { updateFod } from "../utils/update";
 
+export const dynamic = 'force-dynamic'
 export async function GET() {
   try {
     const factRes = db
