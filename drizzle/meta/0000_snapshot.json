@@ -1,9 +1,47 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "b2ee7e47-eb0e-4401-bedc-671bf0c0e508",
+  "id": "7e4a0474-998e-4715-83fe-3ad40023317a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
+    "displayed_facts": {
+      "name": "displayed_facts",
+      "columns": {
+        "date": {
+          "name": "date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(CURRENT_DATE)"
+        },
+        "fact_id": {
+          "name": "fact_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "displayed_facts_fact_id_facts_id_fk": {
+          "name": "displayed_facts_fact_id_facts_id_fk",
+          "tableFrom": "displayed_facts",
+          "tableTo": "facts",
+          "columnsFrom": [
+            "fact_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "facts": {
       "name": "facts",
       "columns": {

@@ -6,10 +6,13 @@ import { updateFod } from "../utils/update";
 export const dynamic = 'force-dynamic'
 export async function GET() {
   try {
+    const date = new Date().toLocaleDateString();
+
     const factRes = db
       .select({ content: facts.content })
       .from(facts)
       .innerJoin(displayed_facts, eq(facts.id, displayed_facts.fact_id))
+      .where(eq(displayed_facts.date, date))
       .limit(1)
       .get();
 
@@ -20,7 +23,6 @@ export async function GET() {
       content = updateResult?.content ?? "Something went wrong, probably my bad 😮‍💨" as string;
     } else
       content = factRes.content;
-      console.log(content)
 
     return Response.json(content);
   } catch (error) {

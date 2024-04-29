@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 export const facts = sqliteTable("facts", {
@@ -6,6 +7,6 @@ export const facts = sqliteTable("facts", {
 });
 
 export const displayed_facts = sqliteTable("displayed_facts", {
-  date: integer("date", { mode: 'timestamp' }),
+  date: text("date").default(sql`(CURRENT_DATE)`),
   fact_id: integer("fact_id").references(() => facts.id),
 })
